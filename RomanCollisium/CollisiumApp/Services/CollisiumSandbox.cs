@@ -22,10 +22,6 @@ public class CollisiumSandbox
         _elon.ReceiveCards(_deck.GetFirstHalf());
         _mark.ReceiveCards(_deck.GetSecondHalf());
         
-        //_elon.ShowCards();
-        //Console.WriteLine();
-        //_mark.ShowCards();
-        
         int elonNumber = _elon.PickCard();
         int markNumber = _mark.PickCard();
 
@@ -34,7 +30,6 @@ public class CollisiumSandbox
 
     public void ShowOpponents()
     {
-        //_deck.ShowDeck();
         _elon.ShowCards();
         Console.Write("     VS      ");
         _mark.ShowCards();

@@ -1,4 +1,11 @@
-RomanCollisium/CollisiumApp/obj
-RomanCollisium/CollisiumApp/bin
-RomanCollisium/CollisiumStrategies/obj
-RomanCollisium/CollisiumStrategies/bin
+.idea/
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
