@@ -16,7 +16,7 @@ class Program
                 services.AddHostedService<CollisiumExperimentWorker>();
                 services.AddScoped<CollisiumSandbox>();
                 services.AddScoped<Deck>();
-                services.AddScoped<IDeckShufller, DeckShufller>();
+                services.AddScoped<IDeckShuffler, DeckShuffler>();
                 
                 // Зарегистрировать партнеров и их стратегии
                 services.AddScoped<ElonStrategy>();

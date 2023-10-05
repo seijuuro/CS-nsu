@@ -2,8 +2,8 @@ namespace CollisiumApp;
 
 public class CollisiumExperimentWorker : IHostedService
 {
+    private const int ExperimentsCount = 1000000;
     private readonly CollisiumSandbox _sandbox;
-    private readonly int _experimentsCount = 1000000;
 
     public CollisiumExperimentWorker(CollisiumSandbox sandbox)
     {
@@ -13,12 +13,12 @@ public class CollisiumExperimentWorker : IHostedService
     public Task StartAsync(CancellationToken cancellationToken)
     {
         int successCount = 0;
-        for (int i = 0; i < _experimentsCount; i++)
+        for (int i = 0; i < ExperimentsCount; i++)
         {
             if (_sandbox.RunExperiment())
                 successCount++;
         }
-        Console.WriteLine($"{successCount} / {_experimentsCount} = {(double)successCount / _experimentsCount}");
+        Console.WriteLine($"{successCount} / {ExperimentsCount} = {(double)successCount / ExperimentsCount}");
         
         return Task.CompletedTask;
     }

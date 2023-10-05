@@ -1,3 +1,7 @@
+*.suo
+*.user
+*.sln.docstates
+*.DotSettings.user
 .idea/
 [Dd]ebug/
 [Dd]ebugPublic/

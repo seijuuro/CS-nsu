@@ -3,21 +3,21 @@ namespace CollisiumApp;
 public class CollisiumSandbox
 {
     private Deck _deck;
-    private IDeckShufller _shufller;
+    private IDeckShuffler _shuffler;
     private ElonPlayer _elon;
     private MarkPlayer _mark;
     
-    public CollisiumSandbox(Deck deck, IDeckShufller deckShufller, ElonPlayer elon, MarkPlayer mark)
+    public CollisiumSandbox(Deck deck, IDeckShuffler deckShuffler, ElonPlayer elon, MarkPlayer mark)
     {
         _deck = deck;
-        _shufller = deckShufller;
+        _shuffler = deckShuffler;
         _elon = elon;
         _mark = mark;
     }
 
     public bool RunExperiment()
     {
-        _deck = _shufller.Shuflle(_deck);
+        _deck = _shuffler.Shuffle(_deck);
         
         _elon.ReceiveCards(_deck.GetFirstHalf());
         _mark.ReceiveCards(_deck.GetSecondHalf());
