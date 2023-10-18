@@ -1,4 +1,4 @@
-namespace CollisiumStrategies.Cards;
+namespace CollisiumCore.Models.Cards;
 
 public record Card(CardColor Color)
 {

@@ -1,4 +1,4 @@
-namespace CollisiumApp;
+namespace CollisiumApp.Services;
 
 public class CollisiumExperimentWorker : IHostedService
 {

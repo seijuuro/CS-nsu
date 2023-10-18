@@ -1,6 +1,6 @@
-using CollisiumStrategies.Cards;
+using CollisiumCore.Models.Cards;
 
-namespace CollisiumStrategies;
+namespace CollisiumCore.Interfaces;
 
 public interface ICardPickStrategy
 {

@@ -1,8 +1,8 @@
 using System.Text;
-using CollisiumStrategies;
-using CollisiumStrategies.Cards;
+using CollisiumCore.Interfaces;
+using CollisiumCore.Models.Cards;
 
-namespace CollisiumApp;
+namespace CollisiumApp.Models;
 
 public class Player
 {
@@ -23,12 +23,7 @@ public class Player
     {
         return _strategy.Pick(_cards.ToArray());
     }
-
-    public CardColor GetCardColor(int index)
-    {
-        return _cards.ElementAt(index).Color;
-    }
-
+    
     public void ShowCards()
     {
         StringBuilder str = new StringBuilder();

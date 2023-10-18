@@ -1,5 +1,9 @@
-using CollisiumApp;
-using CollisiumStrategies;
+using CollisiumApp.Players;
+using CollisiumApp.Services;
+using CollisiumApp.Utilities;
+using CollisiumCore.Interfaces;
+using CollisiumCore.Models;
+using CollisiumStrategies.strategies;
 
 class Program
 {
@@ -19,12 +23,11 @@ class Program
                 services.AddScoped<IDeckShuffler, DeckShuffler>();
                 
                 // Зарегистрировать партнеров и их стратегии
-                services.AddScoped<ElonStrategy>();
-                services.AddScoped<MarkStrategy>();
+                services.AddScoped<ICardPickStrategy, ElonStrategy>();
+                services.AddScoped<ICardPickStrategy, MarkStrategy>();
                 services.AddScoped<ElonPlayer>();
                 services.AddScoped<MarkPlayer>();
 
             });
-
     }
 }

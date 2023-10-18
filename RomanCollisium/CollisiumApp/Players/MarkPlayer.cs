@@ -1,10 +1,11 @@
-using CollisiumStrategies;
+using CollisiumApp.Models;
+using CollisiumCore.Interfaces;
 
-namespace CollisiumApp;
+namespace CollisiumApp.Players;
 
 public class MarkPlayer : Player
 {
-    public MarkPlayer(MarkStrategy strategy) : base(strategy)
+    public MarkPlayer(ICardPickStrategy strategy) : base(strategy)
     {
     }
 

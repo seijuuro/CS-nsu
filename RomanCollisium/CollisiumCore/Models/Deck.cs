@@ -1,11 +1,10 @@
 using System.Text;
-using CollisiumStrategies.Cards;
+using CollisiumCore.Models.Cards;
 
-namespace CollisiumApp;
+namespace CollisiumCore.Models;
 
 public class Deck
 {
-
     private readonly List<Card> _cards;
     private static readonly int cardsCount = 36;
     

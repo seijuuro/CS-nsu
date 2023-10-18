@@ -1,5 +1,5 @@
-using CollisiumStrategies;
-using CollisiumStrategies.Cards;
+using CollisiumCore.Models.Cards;
+using CollisiumStrategies.strategies;
 
 namespace Tests;
 
@@ -11,41 +11,53 @@ public class StrategyTests
     [Fact]
     public void Pick_FirstCardRed_ReturnsZero()
     {
+        //arrange
         _cards = GenerateCardsArray(0);
 
+        //act
         var result = _strategy.Pick(_cards);
 
-        Assert.Equal(0, result);
+        //assert
+        result.Should().Be(0);
     }
 
     [Fact]
     public void Pick_LastCardRed_ReturnsSeventeen()
     {
+        //arrange
         _cards = GenerateCardsArray(17);
 
+        //act
         var result = _strategy.Pick(_cards);
 
-        Assert.Equal(17, result);
+        //assert
+        result.Should().Be(17);
     }
 
     [Fact]
     public void Pick_MiddleCardRed_ReturnsMiddleIndex()
     {
+        //arrange
         _cards = GenerateCardsArray(8);
 
+        //act
         var result = _strategy.Pick(_cards);
 
-        Assert.Equal(8, result);
+        //assert
+        result.Should().Be(8);
     }
 
     [Fact]
     public void Pick_NoRedCards_ReturnsZero()
     {
+        //arrange
         _cards = GenerateCardsArray(-1);
 
+        //act
         var result = _strategy.Pick(_cards);
 
-        Assert.Equal(0, result);
+        //assert
+        result.Should().Be(0);
     }
     
     private Card[] GenerateCardsArray(int redCardPosition)

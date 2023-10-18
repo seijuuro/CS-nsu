@@ -1,10 +1,11 @@
-using CollisiumStrategies;
+using CollisiumApp.Models;
+using CollisiumCore.Interfaces;
 
-namespace CollisiumApp;
+namespace CollisiumApp.Players;
 
 public class ElonPlayer : Player
 {
-    public ElonPlayer(ElonStrategy strategy) : base(strategy)
+    public ElonPlayer(ICardPickStrategy strategy) : base(strategy)
     {
     }
 }

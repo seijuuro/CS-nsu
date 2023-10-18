@@ -1,11 +1,17 @@
-namespace CollisiumApp;
+using CollisiumApp.Players;
+using CollisiumCore.Interfaces;
+using CollisiumCore.Models;
+
+namespace CollisiumApp.Services;
 
 public class CollisiumSandbox
 {
     private Deck _deck;
-    private IDeckShuffler _shuffler;
-    private ElonPlayer _elon;
-    private MarkPlayer _mark;
+    private readonly IDeckShuffler _shuffler;
+    private readonly ElonPlayer _elon;
+    private readonly MarkPlayer _mark;
+    
+    
     
     public CollisiumSandbox(Deck deck, IDeckShuffler deckShuffler, ElonPlayer elon, MarkPlayer mark)
     {
@@ -25,9 +31,16 @@ public class CollisiumSandbox
         int elonNumber = _elon.PickCard();
         int markNumber = _mark.PickCard();
 
-        return _elon.GetCardColor(markNumber) == _mark.GetCardColor(elonNumber); 
+        return CheckCardsColor(elonNumber, markNumber);
     }
 
+    private bool CheckCardsColor(int elonNumber, int markNumber)
+    {
+        var cards = _deck.GetCards();
+        
+        return cards.ElementAt(elonNumber + cards.Count / 2).Color == cards.ElementAt(markNumber).Color;
+    }
+    
     public void ShowOpponents()
     {
         _elon.ShowCards();

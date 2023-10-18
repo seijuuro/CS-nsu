@@ -1,11 +1,12 @@
-using CollisiumStrategies.Cards;
+using CollisiumCore.Interfaces;
+using CollisiumCore.Models;
+using CollisiumCore.Models.Cards;
 
-namespace CollisiumApp;
+namespace CollisiumApp.Utilities;
 
 public class DeckShuffler : IDeckShuffler
 {
     private static Random _random = new Random(Guid.NewGuid().GetHashCode());
-     
     
     public Deck Shuffle(Deck deck)
     {
