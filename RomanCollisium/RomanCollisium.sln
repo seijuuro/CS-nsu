@@ -5,11 +5,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CollisiumApp", "CollisiumAp
 		{81D8F399-DDDA-4669-B32D-94179C16372C} = {81D8F399-DDDA-4669-B32D-94179C16372C}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CollisiumStrategies", "CollisiumStrategies\CollisiumStrategies.csproj", "{F0666B04-3447-4148-A9DD-0FF0A8BEB301}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Strategies", "Strategies\Strategies.csproj", "{F0666B04-3447-4148-A9DD-0FF0A8BEB301}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{27636FAB-F54E-44F7-BC2B-3B62FB0FF1D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CollisiumCore", "CollisiumCore\CollisiumCore.csproj", "{81D8F399-DDDA-4669-B32D-94179C16372C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{81D8F399-DDDA-4669-B32D-94179C16372C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{CEFDBC8A-7FCB-4F03-B2EE-8618C1CC22EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,5 +35,9 @@ Global
 		{81D8F399-DDDA-4669-B32D-94179C16372C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81D8F399-DDDA-4669-B32D-94179C16372C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81D8F399-DDDA-4669-B32D-94179C16372C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CEFDBC8A-7FCB-4F03-B2EE-8618C1CC22EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEFDBC8A-7FCB-4F03-B2EE-8618C1CC22EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEFDBC8A-7FCB-4F03-B2EE-8618C1CC22EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEFDBC8A-7FCB-4F03-B2EE-8618C1CC22EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

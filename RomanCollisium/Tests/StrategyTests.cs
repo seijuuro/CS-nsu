@@ -1,11 +1,11 @@
 using CollisiumCore.Models.Cards;
+using CollisiumCore.strategyDefinitions;
 using CollisiumStrategies.strategies;
 
 namespace Tests;
 
 public class StrategyTests
 {
-    private readonly MarkStrategy _strategy = new ();
     private Card[] _cards = new Card[18];
 
     [Fact]
@@ -15,7 +15,7 @@ public class StrategyTests
         _cards = GenerateCardsArray(0);
 
         //act
-        var result = _strategy.Pick(_cards);
+        var result = StrategyBundle.PickFirstRed(_cards);
 
         //assert
         result.Should().Be(0);
@@ -28,7 +28,7 @@ public class StrategyTests
         _cards = GenerateCardsArray(17);
 
         //act
-        var result = _strategy.Pick(_cards);
+        var result = StrategyBundle.PickFirstRed(_cards);
 
         //assert
         result.Should().Be(17);
@@ -41,7 +41,7 @@ public class StrategyTests
         _cards = GenerateCardsArray(8);
 
         //act
-        var result = _strategy.Pick(_cards);
+        var result = StrategyBundle.PickFirstRed(_cards);
 
         //assert
         result.Should().Be(8);
@@ -54,7 +54,7 @@ public class StrategyTests
         _cards = GenerateCardsArray(-1);
 
         //act
-        var result = _strategy.Pick(_cards);
+        var result = StrategyBundle.PickFirstRed(_cards);
 
         //assert
         result.Should().Be(0);

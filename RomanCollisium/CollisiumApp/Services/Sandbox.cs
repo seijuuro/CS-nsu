@@ -4,7 +4,7 @@ using CollisiumCore.Models;
 
 namespace CollisiumApp.Services;
 
-public class CollisiumSandbox
+public class Sandbox
 {
     private Deck _deck;
     private readonly IDeckShuffler _shuffler;
@@ -12,8 +12,7 @@ public class CollisiumSandbox
     private readonly MarkPlayer _mark;
     
     
-    
-    public CollisiumSandbox(Deck deck, IDeckShuffler deckShuffler, ElonPlayer elon, MarkPlayer mark)
+    public Sandbox(Deck deck, IDeckShuffler deckShuffler, ElonPlayer elon, MarkPlayer mark)
     {
         _deck = deck;
         _shuffler = deckShuffler;
@@ -21,19 +20,32 @@ public class CollisiumSandbox
         _mark = mark;
     }
 
-    public bool RunExperiment()
+    public bool RunRandomExperiment()
     {
         _deck = _shuffler.Shuffle(_deck);
         
-        _elon.ReceiveCards(_deck.GetFirstHalf());
-        _mark.ReceiveCards(_deck.GetSecondHalf());
+        return CardsDraft(_deck);
+    }
+
+    // не уверен, что тут нужна перегрузка
+    public bool RunExperiment(string cardsOrder)
+    {
+        _deck.CardsFromString(cardsOrder);
+        
+        return CardsDraft(_deck);
+    }
+
+    private bool CardsDraft(Deck deck)
+    {
+        _elon.ReceiveCards(deck.GetFirstHalf());
+        _mark.ReceiveCards(deck.GetSecondHalf());
         
         int elonNumber = _elon.PickCard();
         int markNumber = _mark.PickCard();
 
         return CheckCardsColor(elonNumber, markNumber);
     }
-
+    
     private bool CheckCardsColor(int elonNumber, int markNumber)
     {
         var cards = _deck.GetCards();

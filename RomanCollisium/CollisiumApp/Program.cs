@@ -1,9 +1,14 @@
+using CollisiumApp.Configs;
 using CollisiumApp.Players;
 using CollisiumApp.Services;
 using CollisiumApp.Utilities;
 using CollisiumCore.Interfaces;
 using CollisiumCore.Models;
+using CollisiumDataAccess.DbContexts;
+using CollisiumDataAccess.Repositories;
+using CollisiumDataAccess.Services;
 using CollisiumStrategies.strategies;
+using Microsoft.EntityFrameworkCore;
 
 class Program
 {
@@ -17,17 +22,22 @@ class Program
         return Host.CreateDefaultBuilder(args)
             .ConfigureServices((hostContext, services) =>
             {
-                services.AddHostedService<CollisiumExperimentWorker>();
-                services.AddScoped<CollisiumSandbox>();
+                services.Configure<ExperimentConfig>(hostContext.Configuration.GetSection("ExperimentConfig"));
+                services.AddDbContext<ExperimentDbContext>(options =>
+                    options.UseSqlite(hostContext.Configuration.GetConnectionString("DefaultConnection")));
+                
+                services.AddHostedService<ExperimentWorker>();
+                services.AddScoped<Sandbox>();
                 services.AddScoped<Deck>();
                 services.AddScoped<IDeckShuffler, DeckShuffler>();
                 
-                // Зарегистрировать партнеров и их стратегии
                 services.AddScoped<ICardPickStrategy, ElonStrategy>();
                 services.AddScoped<ICardPickStrategy, MarkStrategy>();
                 services.AddScoped<ElonPlayer>();
                 services.AddScoped<MarkPlayer>();
 
+                services.AddScoped<ExperimentData>();
+                services.AddScoped<ExperimentRepository>();
             });
     }
 }

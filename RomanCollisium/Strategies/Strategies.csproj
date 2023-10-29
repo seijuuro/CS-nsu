@@ -4,11 +4,15 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <RootNamespace>CollisiumStrategies</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\CollisiumCore\CollisiumCore.csproj" />
+        <ProjectReference Include="..\Core\Core.csproj" />
+    
+
     </ItemGroup>
+
 
 
 

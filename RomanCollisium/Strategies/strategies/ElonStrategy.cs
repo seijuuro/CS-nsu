@@ -2,7 +2,6 @@ using CollisiumCore.Interfaces;
 using CollisiumCore.Models.Cards;
 using CollisiumCore.strategyDefinitions;
 
-
 namespace CollisiumStrategies.strategies;
 
 public class ElonStrategy : ICardPickStrategy

@@ -25,6 +25,21 @@ public class Deck
     {
         return _cards;
     }
+
+    public void CardsFromString(string cardsOrder)
+    {
+        if (cardsOrder.Length != cardsCount) 
+            throw new ArgumentException("Invalid string length.");
+
+        _cards.Clear();
+
+        _cards.AddRange(cardsOrder.Select(c => c switch
+        {
+            '1' => blackCard,
+            '0' => redCard,
+            _ => throw new ArgumentException($"Invalid character '{c}' in string.")
+        }));
+    }
     
     public List<Card> GetFirstHalf()
     {
