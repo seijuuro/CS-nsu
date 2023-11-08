@@ -1,6 +1,6 @@
-using CollisiumCore.Models;
+using Core.Models;
 
-namespace CollisiumCore.Interfaces;
+namespace Core.Interfaces;
 
 public interface IDeckShuffler
 {

@@ -1,23 +1,28 @@
 using System.Text;
-using CollisiumCore.Models.Cards;
+using Core.Models.Cards;
 
-namespace CollisiumCore.Models;
+namespace Core.Models;
 
 public class Deck
 {
     private readonly List<Card> _cards;
-    private static readonly int cardsCount = 36;
+    private readonly int _cardsCount;
     
-    private static readonly Card redCard = new Card(CardColor.Red);
-    private static readonly Card blackCard = new Card(CardColor.Black);
+    private static readonly Card RedCard = new Card(CardColor.Red);
+    private static readonly Card BlackCard = new Card(CardColor.Black);
     
-    public Deck()
+    public Deck(int cardsCount)
     {
+        if (cardsCount % 2 != 0)
+            throw new ArgumentException("Cards Count must be even number");
+
+        _cardsCount = cardsCount;
+        
         _cards = new List<Card>(cardsCount);
         for (var i = 0; i < cardsCount / 2; i++)
         {
-            _cards.Add(redCard);
-            _cards.Add(blackCard);
+            _cards.Add(RedCard);
+            _cards.Add(BlackCard);
         }
     }
     
@@ -26,19 +31,30 @@ public class Deck
         return _cards;
     }
 
-    public void CardsFromString(string cardsOrder)
+    public void SetCards(string cardsOrder)
     {
-        if (cardsOrder.Length != cardsCount) 
+        if (cardsOrder.Length != _cardsCount) 
             throw new ArgumentException("Invalid string length.");
 
         _cards.Clear();
 
         _cards.AddRange(cardsOrder.Select(c => c switch
         {
-            '1' => blackCard,
-            '0' => redCard,
+            'B' => BlackCard,
+            'R' => RedCard,
             _ => throw new ArgumentException($"Invalid character '{c}' in string.")
         }));
+    }
+
+    public String CardsToString()
+    {
+        StringBuilder str = new StringBuilder();
+        foreach (var card in _cards)
+        {
+            str.Append(card.ToString());
+        }
+
+        return str.ToString();
     }
     
     public List<Card> GetFirstHalf()
@@ -54,18 +70,7 @@ public class Deck
     
     public override string ToString()
     {
-        StringBuilder str = new StringBuilder();
-        foreach (var card in _cards)
-        {
-            str.Append(card.ToString());
-        }
-
-        return str.ToString();
-    }
-    
-    public void ShowDeck()
-    {
-        Console.WriteLine(this.ToString());
+        return $"CardsCount: {_cardsCount}; Cards: {CardsToString()}; ";
     }
 }
 

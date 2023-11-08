@@ -1,26 +1,30 @@
 using CollisiumDataAccess.DbContexts;
-using CollisiumDataAccess.Entities;
 
 namespace CollisiumDataAccess.Repositories;
 
-public class ExperimentRepository
+public class ExperimentRepository <TEntity> where TEntity : class
 {
     private readonly ExperimentDbContext _context;
-    
+
     public ExperimentRepository(ExperimentDbContext context)
     {
         _context = context;
     }
     
-    public void Save(List<ExperimentCondition> conditions)
+    public void Create(List<TEntity> entities)
     {
-        _context.ExperimentConditions.AddRange(conditions);
+        _context.Set<TEntity>().AddRange(entities);
+        _context.SaveChanges();
+    }
+
+    public void Create(TEntity entity)
+    {
+        _context.Set<TEntity>().Add(entity);
         _context.SaveChanges();
     }
     
-    public List<ExperimentCondition> Read()
+    public List<TEntity> Read()
     {
-        return _context.ExperimentConditions.ToList();
+        return _context.Set<TEntity>().ToList();
     }
 }
-

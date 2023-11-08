@@ -1,4 +1,4 @@
-namespace CollisiumCore.Models.Cards;
+namespace Core.Models.Cards;
 
 public enum CardColor
 {

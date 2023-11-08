@@ -11,13 +11,7 @@
       <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
       <ProjectReference Include="..\Core\Core.csproj" />
       <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
-      <ProjectReference Include="..\Strategies\Strategies.csproj" />
       <PackageReference Include="FluentAssertions" Version="7.0.0-alpha.1" />
-
     </ItemGroup>
-
-
-
-
 
 </Project>

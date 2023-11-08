@@ -1,12 +1,12 @@
-using CollisiumCore.Models;
-using CollisiumCore.Models.Cards;
+using Core.Models;
+using Core.Models.Cards;
 using FluentAssertions.Execution;
 
 namespace Tests;
 
 public class DeckTests
 {
-    private readonly Deck _deck = new();
+    private readonly Deck _deck = new(36);
     
     [Fact]
     public void Init_Correctly()

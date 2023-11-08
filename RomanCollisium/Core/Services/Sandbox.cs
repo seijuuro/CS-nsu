@@ -1,23 +1,22 @@
-using CollisiumApp.Players;
-using CollisiumCore.Interfaces;
-using CollisiumCore.Models;
+using Core.Interfaces;
+using Core.Models;
+using Core.Players;
 
-namespace CollisiumApp.Services;
+namespace Core.Services;
 
 public class Sandbox
 {
     private Deck _deck;
     private readonly IDeckShuffler _shuffler;
-    private readonly ElonPlayer _elon;
-    private readonly MarkPlayer _mark;
-    
+    public readonly ElonPlayer Elon;
+    public readonly MarkPlayer Mark;
     
     public Sandbox(Deck deck, IDeckShuffler deckShuffler, ElonPlayer elon, MarkPlayer mark)
     {
         _deck = deck;
         _shuffler = deckShuffler;
-        _elon = elon;
-        _mark = mark;
+        Elon = elon;
+        Mark = mark;
     }
 
     public bool RunRandomExperiment()
@@ -30,18 +29,18 @@ public class Sandbox
     // не уверен, что тут нужна перегрузка
     public bool RunExperiment(string cardsOrder)
     {
-        _deck.CardsFromString(cardsOrder);
+        _deck.SetCards(cardsOrder);
         
         return CardsDraft(_deck);
     }
 
     private bool CardsDraft(Deck deck)
     {
-        _elon.ReceiveCards(deck.GetFirstHalf());
-        _mark.ReceiveCards(deck.GetSecondHalf());
+        Elon.ReceiveCards(deck.GetFirstHalf());
+        Mark.ReceiveCards(deck.GetSecondHalf());
         
-        int elonNumber = _elon.PickCard();
-        int markNumber = _mark.PickCard();
+        int elonNumber = Elon.PickCard();
+        int markNumber = Mark.PickCard();
 
         return CheckCardsColor(elonNumber, markNumber);
     }
@@ -55,9 +54,9 @@ public class Sandbox
     
     public void ShowOpponents()
     {
-        _elon.ShowCards();
+        Elon.ShowCards();
         Console.Write("     VS      ");
-        _mark.ShowCards();
+        Mark.ShowCards();
         Console.WriteLine("");
     }
 }

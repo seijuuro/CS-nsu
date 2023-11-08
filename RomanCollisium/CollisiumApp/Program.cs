@@ -1,15 +1,19 @@
-using CollisiumApp.Configs;
-using CollisiumApp.Players;
 using CollisiumApp.Services;
-using CollisiumApp.Utilities;
-using CollisiumCore.Interfaces;
-using CollisiumCore.Models;
 using CollisiumDataAccess.DbContexts;
+using CollisiumDataAccess.Entities;
 using CollisiumDataAccess.Repositories;
 using CollisiumDataAccess.Services;
-using CollisiumStrategies.strategies;
+using Core.Configs;
+using Core.Interfaces;
+using Core.Models;
+using Core.Players;
+using Core.Services;
+using Core.Strategies;
+using Core.Utilities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
+namespace CollisiumApp;
 class Program
 {
     public static void Main(string[] args)
@@ -17,27 +21,31 @@ class Program
         CreateHostBuilder(args).Build().Run();
     }
     
-    public static IHostBuilder CreateHostBuilder(string[] args)
+    private static IHostBuilder CreateHostBuilder(string[] args)
     {
         return Host.CreateDefaultBuilder(args)
             .ConfigureServices((hostContext, services) =>
             {
                 services.Configure<ExperimentConfig>(hostContext.Configuration.GetSection("ExperimentConfig"));
+                IServiceProvider serviceProvider = services.BuildServiceProvider();
+                
                 services.AddDbContext<ExperimentDbContext>(options =>
                     options.UseSqlite(hostContext.Configuration.GetConnectionString("DefaultConnection")));
                 
                 services.AddHostedService<ExperimentWorker>();
                 services.AddScoped<Sandbox>();
-                services.AddScoped<Deck>();
-                services.AddScoped<IDeckShuffler, DeckShuffler>();
+                services.AddScoped<Deck>(provider => 
+                    new Deck(serviceProvider.GetRequiredService<IOptions<ExperimentConfig>>().Value.DeckSize));
                 
-                services.AddScoped<ICardPickStrategy, ElonStrategy>();
-                services.AddScoped<ICardPickStrategy, MarkStrategy>();
+                services.AddScoped<IDeckShuffler, DeckShuffler>();
+                services.AddScoped<IElonStrategy, PickFirstRedStrategy>();
+                services.AddScoped<IMarkStrategy, PickFirstRedStrategy>();
                 services.AddScoped<ElonPlayer>();
                 services.AddScoped<MarkPlayer>();
 
                 services.AddScoped<ExperimentData>();
-                services.AddScoped<ExperimentRepository>();
+                services.AddScoped<ExperimentRepository<ExperimentCondition>>();
+                services.AddScoped<ExperimentRepository<Experiment>>();
             });
     }
 }

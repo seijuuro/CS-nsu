@@ -1,6 +1,7 @@
-using CollisiumApp.Configs;
-using CollisiumApp.Utilities;
 using CollisiumDataAccess.Services;
+using Core.Configs;
+using Core.Services;
+using Core.Utilities;
 using Microsoft.Extensions.Options;
 
 namespace CollisiumApp.Services;
@@ -31,12 +32,15 @@ public class ExperimentWorker : IHostedService
 
         if (_config.Value.GenerateExperimentsDb)
         {
-             _experimentData.GenerateAndSave(new DeckShuffler(), _config.Value.ExperimentsDbCount);
+            var elonStrategyName = _sandbox.Elon.GetStrategyName();
+            var markStrategyName = _sandbox.Mark.GetStrategyName();
+             _experimentData.SaveRandomExperiment(elonStrategyName, markStrategyName,
+                 _config.Value.ExperimentsDbCount, _config.Value.DeckSize);
         }
 
         if (_config.Value.RunExperimentsDb)
         {
-            var experiments = _experimentData.GetAllData();
+            var experiments = _experimentData.GetAllConditions();
             var count = experiments.Count(condition => _sandbox.RunExperiment(condition.CardsOrder));
             Console.WriteLine($"DB: {count} /  {experiments.Count}");
         }

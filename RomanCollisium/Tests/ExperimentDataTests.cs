@@ -1,43 +1,83 @@
-using CollisiumApp.Utilities;
 using CollisiumDataAccess.DbContexts;
+using CollisiumDataAccess.Entities;
 using CollisiumDataAccess.Repositories;
 using CollisiumDataAccess.Services;
 using Microsoft.EntityFrameworkCore;
+using Xunit.Abstractions;
 
 namespace Tests;
 
 public class ExperimentDataTests
 {
-    private ExperimentDbContext _context;
+    private ExperimentData _dataService;
+    
+    private const int ConditionsCount = 10;
+    private const int CardsCount = 36;
+    private const string FirstStrategyName = "First";
+    private const string SecondStrategyName = "Second";
 
-    public ExperimentDataTests()
+    public ExperimentDataTests(ITestOutputHelper testOutputHelper)
     {
         var options = new DbContextOptionsBuilder<ExperimentDbContext>()
             .UseSqlite("DataSource=:memory:")
             .Options;
 
-        _context = new ExperimentDbContext(options);
-        _context.Database.OpenConnection();
-        _context.Database.EnsureCreated();
+        var context = new ExperimentDbContext(options);
+        context.Database.OpenConnection();
+        context.Database.EnsureCreated();
+        
+        ExperimentRepository<ExperimentCondition> conditionRepository = new(context);
+        ExperimentRepository<Experiment> experimentRepository = new(context);
+        _dataService = new ExperimentData(conditionRepository, experimentRepository);
+    }
+    
+
+    [Fact]
+    public void CreateAnExperiment_ExperimentSavedOnDb() 
+    {
+        //act 
+        _dataService.SaveRandomExperiment(FirstStrategyName, SecondStrategyName, ConditionsCount, CardsCount);
+        var experimentsCount = _dataService.GetAllExperiments().Count;
+
+        //assert
+        experimentsCount.Should().Be(1);
     }
 
     [Fact]
-    public void GenerateExperiment_ConditionsSavedOnDb() //название так себе
+    public void CreateAnExperiment_ConditionsSavedOnDb() 
     {
-        var repository = new ExperimentRepository(_context);
-        var dataService = new ExperimentData(repository);
-        
-        // заменить шафлер на мок? 
-        dataService.GenerateAndSave(new DeckShuffler(), 1);
-        var conditions = dataService.GetAllData();
-        var result = conditions.Count;
+        //act 
+        _dataService.SaveRandomExperiment(FirstStrategyName, SecondStrategyName, ConditionsCount, CardsCount);
+        var conditionsCount = _dataService.GetAllConditions().Count;
 
-        result.Should().Be(1);
+        //assert
+        conditionsCount.Should().Be(ConditionsCount);
     }
-
+    
     [Fact]
-    public void GetData_ReturnCorrectData() // название, проверка на корректное сохранение(длина 36, в виде строки единиц и нулей)
+    public void CreateAnExperiment_ExperimentFieldsNotEmpty()
     {
-        
+        //act
+        _dataService.SaveRandomExperiment(FirstStrategyName, SecondStrategyName, ConditionsCount, CardsCount);
+        var experiment = _dataService.GetAllExperiments().FirstOrDefault();
+
+        //assert
+        experiment.Should().NotBeNull();
+        experiment.FirstStrategy.Should().NotBeNullOrEmpty();
+        experiment.SecondStrategy.Should().NotBeNullOrEmpty();
+        experiment.Date.Should().NotBe(DateTime.MinValue);
+    }
+    
+    [Fact]
+    public void CreateAnExperiment_ConditionFieldsNotEmpty()
+    {
+        //act
+        _dataService.SaveRandomExperiment(FirstStrategyName, SecondStrategyName, ConditionsCount, CardsCount);
+        var condition = _dataService.GetAllConditions().FirstOrDefault();
+
+        //assert
+        condition.Should().NotBeNull();
+        condition.ExperimentId.Should().NotBe(default);
+        condition.CardsOrder.Should().NotBeNullOrEmpty();
     }
 }

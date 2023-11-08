@@ -1,8 +1,8 @@
-using CollisiumCore.Interfaces;
-using CollisiumCore.Models;
-using CollisiumCore.Models.Cards;
+using Core.Interfaces;
+using Core.Models;
+using Core.Models.Cards;
 
-namespace CollisiumApp.Utilities;
+namespace Core.Utilities;
 
 public class DeckShuffler : IDeckShuffler
 {

@@ -1,8 +1,8 @@
 using System.Text;
-using CollisiumCore.Interfaces;
-using CollisiumCore.Models.Cards;
+using Core.Interfaces;
+using Core.Models.Cards;
 
-namespace CollisiumApp.Models;
+namespace Core.Models;
 
 public class Player
 {
@@ -33,5 +33,10 @@ public class Player
         }
         
         Console.Write(str);
+    }
+
+    public string GetStrategyName()
+    {
+        return _strategy.GetType().Name;
     }
 }

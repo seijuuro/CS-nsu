@@ -1,41 +1,61 @@
-using CollisiumCore.Interfaces;
-using CollisiumCore.Models;
 using CollisiumDataAccess.Entities;
 using CollisiumDataAccess.Repositories;
+using Core.Interfaces;
+using Core.Models;
+using Core.Services;
+using Core.Utilities;
 
 namespace CollisiumDataAccess.Services;
 
 public class ExperimentData
 {
-    private ExperimentRepository _repository;
+    private readonly ExperimentRepository<ExperimentCondition> _conditionsExperimentRepository;
+    private readonly ExperimentRepository<Experiment> _experimentRepository;
 
-    public ExperimentData(ExperimentRepository repository)
+    public ExperimentData(ExperimentRepository<ExperimentCondition> conditionsRepository, ExperimentRepository<Experiment> experimentRepository)
     {
-        _repository = repository;
+        _conditionsExperimentRepository = conditionsRepository;
+        _experimentRepository = experimentRepository;
     }
-    
-    public void GenerateAndSave(IDeckShuffler deckShuffler, int count)
+
+    public void SaveRandomExperiment(string firstStrategy, string secondStrategy, int conditionsCount, int cardsCount)
     {
-        var conditions = new List<ExperimentCondition>();
-        var deck = new Deck();
+        var deck = new Deck(cardsCount);
+        var deckShuffler = new DeckShuffler();
         
-        for (int i = 0; i < count; i++)
+        var experiment = new Experiment()
+        {
+            Date = DateTime.Now,
+            FirstStrategy = firstStrategy,
+            SecondStrategy = secondStrategy
+        };
+        _experimentRepository.Create(experiment);
+        
+        var conditions = new List<ExperimentCondition>();
+        
+        for (int i = 0; i < conditionsCount; i++)
         {
             deck = deckShuffler.Shuffle(deck);
 
             var condition = new ExperimentCondition()
             {
-                CardsOrder = deck.ToString().Replace(" ", "")
+                ExperimentId = experiment.Id,
+                CardsOrder = deck.CardsToString()
             };
 
             conditions.Add(condition);
         }
         
-        _repository.Save(conditions);
+        _conditionsExperimentRepository.Create(conditions);
+    }
+    
+    public List<ExperimentCondition> GetAllConditions()
+    {
+        return _conditionsExperimentRepository.Read();
     }
 
-    public List<ExperimentCondition> GetAllData()
+    public List<Experiment> GetAllExperiments()
     {
-        return _repository.Read();
+        return _experimentRepository.Read();
     }
 }
