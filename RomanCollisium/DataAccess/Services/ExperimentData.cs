@@ -1,8 +1,6 @@
 using CollisiumDataAccess.Entities;
 using CollisiumDataAccess.Repositories;
-using Core.Interfaces;
 using Core.Models;
-using Core.Services;
 using Core.Utilities;
 
 namespace CollisiumDataAccess.Services;
