@@ -2,7 +2,7 @@ using CollisiumDataAccess.DbContexts;
 
 namespace CollisiumDataAccess.Repositories;
 
-public class ExperimentRepository <TEntity> where TEntity : class
+public class ExperimentRepository 
 {
     private readonly ExperimentDbContext _context;
 
@@ -11,19 +11,19 @@ public class ExperimentRepository <TEntity> where TEntity : class
         _context = context;
     }
     
-    public void Create(List<TEntity> entities)
+    public void Create<TEntity>(List<TEntity> entities)  where TEntity : class
     {
         _context.Set<TEntity>().AddRange(entities);
         _context.SaveChanges();
     }
-
-    public void Create(TEntity entity)
+ 
+    public void Create<TEntity>(TEntity entity) where TEntity : class
     {
         _context.Set<TEntity>().Add(entity);
         _context.SaveChanges();
     }
     
-    public List<TEntity> Read()
+    public List<TEntity> Read<TEntity>() where TEntity : class
     {
         return _context.Set<TEntity>().ToList();
     }

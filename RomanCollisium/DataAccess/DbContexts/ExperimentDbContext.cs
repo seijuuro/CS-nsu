@@ -11,12 +11,4 @@ public class ExperimentDbContext : DbContext
     public ExperimentDbContext(DbContextOptions<ExperimentDbContext> options) : base(options)
     {
     }
-    
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Experiment>()
-            .HasMany<ExperimentCondition>()
-            .WithOne()
-            .HasForeignKey(ec => ec.ExperimentId);
-    }
 }

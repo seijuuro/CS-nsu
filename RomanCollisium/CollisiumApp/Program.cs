@@ -14,7 +14,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
 namespace CollisiumApp;
-class Program
+
+static class Program
 {
     public static void Main(string[] args)
     {
@@ -34,7 +35,7 @@ class Program
                 
                 services.AddHostedService<ExperimentWorker>();
                 services.AddScoped<Sandbox>();
-                services.AddScoped<Deck>(provider => 
+                services.AddScoped<Deck>(_ => 
                     new Deck(serviceProvider.GetRequiredService<IOptions<ExperimentConfig>>().Value.DeckSize));
                 
                 services.AddScoped<IDeckShuffler, DeckShuffler>();
@@ -44,8 +45,7 @@ class Program
                 services.AddScoped<MarkPlayer>();
 
                 services.AddScoped<ExperimentData>();
-                services.AddScoped<ExperimentRepository<ExperimentCondition>>();
-                services.AddScoped<ExperimentRepository<Experiment>>();
+                services.AddScoped<ExperimentRepository>();
             });
     }
 }

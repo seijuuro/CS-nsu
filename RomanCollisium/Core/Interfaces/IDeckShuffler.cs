@@ -4,5 +4,5 @@ namespace Core.Interfaces;
 
 public interface IDeckShuffler
 {
-    public Deck Shuffle(Deck deck);
+    Deck Shuffle(Deck deck);
 }

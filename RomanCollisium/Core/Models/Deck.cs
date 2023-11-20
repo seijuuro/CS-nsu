@@ -8,8 +8,8 @@ public class Deck
     private readonly List<Card> _cards;
     private readonly int _cardsCount;
     
-    private static readonly Card RedCard = new Card(CardColor.Red);
-    private static readonly Card BlackCard = new Card(CardColor.Black);
+    private static readonly Card RedCard = new (CardColor.Red);
+    private static readonly Card BlackCard = new (CardColor.Black);
     
     public Deck(int cardsCount)
     {
@@ -46,12 +46,12 @@ public class Deck
         }));
     }
 
-    public String CardsToString()
+    public string CardsToString()
     {
-        StringBuilder str = new StringBuilder();
+        StringBuilder str = new ();
         foreach (var card in _cards)
         {
-            str.Append(card.ToString());
+            str.Append(card);
         }
 
         return str.ToString();
@@ -59,12 +59,17 @@ public class Deck
     
     public List<Card> GetFirstHalf()
     {
-        return _cards.Take(_cards.Count / 2).ToList();
+        return _cards
+            .Take(_cards.Count / 2)
+            .ToList();
     }
 
     public List<Card> GetSecondHalf()
     {
-        return _cards.Skip(_cards.Count / 2).Take(_cards.Count / 2).ToList();
+        return _cards
+            .Skip(_cards.Count / 2)
+            .Take(_cards.Count / 2)
+            .ToList();
     }
 
     

@@ -6,13 +6,16 @@ namespace Tests;
 
 public class DeckTests
 {
-    private readonly Deck _deck = new(36);
-    
-    [Fact]
-    public void Init_Correctly()
+
+    [Theory]
+    [InlineData(2)]
+    [InlineData(36)]
+    [InlineData(100)]
+    public void Init_Correctly(int cardsCount)
     {
         //arrange
-        var cards = _deck.GetCards();
+        Deck deck = new (cardsCount);
+        var cards = deck.GetCards();
         
         //act
         var redCount = cards.Count(c => c.Color == CardColor.Red);
@@ -21,8 +24,8 @@ public class DeckTests
         //assert
         using (new AssertionScope())
         {
-            redCount.Should().Be(18);
-            blackCount.Should().Be(18);
+            redCount.Should().Be(cardsCount/2);
+            blackCount.Should().Be(cardsCount/2);
         }
     }
 }

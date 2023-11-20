@@ -8,4 +8,6 @@ public class Experiment
     [Column(TypeName = "TEXT")] public DateTime Date { get; set; }
     public string FirstStrategy { get; set; }
     public string SecondStrategy { get; set; }
+
+    public ICollection<ExperimentCondition> Conditions { get; set; }
 }

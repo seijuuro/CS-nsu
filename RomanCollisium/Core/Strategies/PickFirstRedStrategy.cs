@@ -5,14 +5,10 @@ namespace Core.Strategies;
 
 public class PickFirstRedStrategy : IElonStrategy, IMarkStrategy
 {
-    public int Pick(Card[] cards)
+    public int Pick(IEnumerable<Card> cards)
     {
-        for(int i = 0; i < cards.Length; i++)
-        {
-            if (cards[i].Color == CardColor.Red)
-                return i;
-        }
-
-        return 0;
+        return cards
+            .Select((card, i) => card.Color == CardColor.Red ? i : -1)
+            .FirstOrDefault(i => i != -1);
     }
 }

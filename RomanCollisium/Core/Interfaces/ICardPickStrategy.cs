@@ -4,5 +4,5 @@ namespace Core.Interfaces;
 
 public interface ICardPickStrategy
 {
-    public int Pick(Card[] cards);
+    int Pick(IEnumerable<Card> cards);
 }

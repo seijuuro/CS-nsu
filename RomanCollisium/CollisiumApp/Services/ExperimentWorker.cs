@@ -1,7 +1,6 @@
 using CollisiumDataAccess.Services;
 using Core.Configs;
 using Core.Services;
-using Core.Utilities;
 using Microsoft.Extensions.Options;
 
 namespace CollisiumApp.Services;
@@ -21,8 +20,8 @@ public class ExperimentWorker : IHostedService
     
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        int successCount = 0;
-        for (int i = 0; i < _config.Value.ExperimentsToRunCount; i++)
+        var successCount = 0;
+        for (var i = 0; i < _config.Value.ExperimentsToRunCount; i++)
         {
             if (_sandbox.RunRandomExperiment())
                 successCount++;
@@ -32,8 +31,8 @@ public class ExperimentWorker : IHostedService
 
         if (_config.Value.GenerateExperimentsDb)
         {
-            var elonStrategyName = _sandbox.Elon.GetStrategyName();
-            var markStrategyName = _sandbox.Mark.GetStrategyName();
+            var elonStrategyName = _sandbox.GetElonStrategyName();
+            var markStrategyName = _sandbox.GetMarkStrategyName();
              _experimentData.SaveRandomExperiment(elonStrategyName, markStrategyName,
                  _config.Value.ExperimentsDbCount, _config.Value.DeckSize);
         }

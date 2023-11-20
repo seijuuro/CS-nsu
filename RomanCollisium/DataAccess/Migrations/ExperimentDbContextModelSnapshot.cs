@@ -61,11 +61,18 @@ namespace CollisiumDataAccess.Migrations
 
             modelBuilder.Entity("CollisiumDataAccess.Entities.ExperimentCondition", b =>
                 {
-                    b.HasOne("CollisiumDataAccess.Entities.Experiment", null)
-                        .WithMany()
+                    b.HasOne("CollisiumDataAccess.Entities.Experiment", "Experiment")
+                        .WithMany("Conditions")
                         .HasForeignKey("ExperimentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Experiment");
+                });
+
+            modelBuilder.Entity("CollisiumDataAccess.Entities.Experiment", b =>
+                {
+                    b.Navigation("Conditions");
                 });
 #pragma warning restore 612, 618
         }

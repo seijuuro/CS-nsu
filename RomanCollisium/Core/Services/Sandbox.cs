@@ -8,39 +8,48 @@ public class Sandbox
 {
     private Deck _deck;
     private readonly IDeckShuffler _shuffler;
-    public readonly ElonPlayer Elon;
-    public readonly MarkPlayer Mark;
+    private readonly ElonPlayer _elon;
+    private readonly MarkPlayer _mark;
     
     public Sandbox(Deck deck, IDeckShuffler deckShuffler, ElonPlayer elon, MarkPlayer mark)
     {
         _deck = deck;
         _shuffler = deckShuffler;
-        Elon = elon;
-        Mark = mark;
+        _elon = elon;
+        _mark = mark;
     }
 
     public bool RunRandomExperiment()
     {
         _deck = _shuffler.Shuffle(_deck);
         
-        return CardsDraft(_deck);
+        return CardsDraft();
     }
-
-    // не уверен, что тут нужна перегрузка
+    
     public bool RunExperiment(string cardsOrder)
     {
         _deck.SetCards(cardsOrder);
         
-        return CardsDraft(_deck);
+        return CardsDraft();
+    }
+    
+    public string GetElonStrategyName()
+    {
+        return _elon.GetStrategyName();
     }
 
-    private bool CardsDraft(Deck deck)
+    public string GetMarkStrategyName()
     {
-        Elon.ReceiveCards(deck.GetFirstHalf());
-        Mark.ReceiveCards(deck.GetSecondHalf());
+        return _mark.GetStrategyName();
+    }
+
+    private bool CardsDraft()
+    {
+        _elon.ReceiveCards(_deck.GetFirstHalf());
+        _mark.ReceiveCards(_deck.GetSecondHalf());
         
-        int elonNumber = Elon.PickCard();
-        int markNumber = Mark.PickCard();
+        var elonNumber = _elon.PickCard();
+        var markNumber = _mark.PickCard();
 
         return CheckCardsColor(elonNumber, markNumber);
     }
@@ -50,13 +59,5 @@ public class Sandbox
         var cards = _deck.GetCards();
         
         return cards.ElementAt(elonNumber + cards.Count / 2).Color == cards.ElementAt(markNumber).Color;
-    }
-    
-    public void ShowOpponents()
-    {
-        Elon.ShowCards();
-        Console.Write("     VS      ");
-        Mark.ShowCards();
-        Console.WriteLine("");
     }
 }

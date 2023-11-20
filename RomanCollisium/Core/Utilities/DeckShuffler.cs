@@ -6,11 +6,11 @@ namespace Core.Utilities;
 
 public class DeckShuffler : IDeckShuffler
 {
-    private static Random _random = new Random(Guid.NewGuid().GetHashCode());
+    private readonly Random _random = new (Guid.NewGuid().GetHashCode());
     
     public Deck Shuffle(Deck deck)
     {
-        List<Card> cards = deck.GetCards();
+        var cards = deck.GetCards();
         for (var i = cards.Count - 1; i > 0; i--)
         {
             var k = _random.Next(i + 1);

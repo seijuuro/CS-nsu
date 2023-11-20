@@ -7,13 +7,11 @@ namespace CollisiumDataAccess.Services;
 
 public class ExperimentData
 {
-    private readonly ExperimentRepository<ExperimentCondition> _conditionsExperimentRepository;
-    private readonly ExperimentRepository<Experiment> _experimentRepository;
+    private readonly ExperimentRepository _experimentRepository;
 
-    public ExperimentData(ExperimentRepository<ExperimentCondition> conditionsRepository, ExperimentRepository<Experiment> experimentRepository)
+    public ExperimentData(ExperimentRepository repository)
     {
-        _conditionsExperimentRepository = conditionsRepository;
-        _experimentRepository = experimentRepository;
+        _experimentRepository = repository;
     }
 
     public void SaveRandomExperiment(string firstStrategy, string secondStrategy, int conditionsCount, int cardsCount)
@@ -21,39 +19,36 @@ public class ExperimentData
         var deck = new Deck(cardsCount);
         var deckShuffler = new DeckShuffler();
         
-        var experiment = new Experiment()
+        var experiment = new Experiment
         {
             Date = DateTime.Now,
             FirstStrategy = firstStrategy,
-            SecondStrategy = secondStrategy
+            SecondStrategy = secondStrategy,
+            Conditions = new List<ExperimentCondition>()
         };
-        _experimentRepository.Create(experiment);
-        
-        var conditions = new List<ExperimentCondition>();
-        
-        for (int i = 0; i < conditionsCount; i++)
+
+        for (var i = 0; i < conditionsCount; i++)
         {
             deck = deckShuffler.Shuffle(deck);
 
             var condition = new ExperimentCondition()
             {
-                ExperimentId = experiment.Id,
                 CardsOrder = deck.CardsToString()
             };
 
-            conditions.Add(condition);
+            experiment.Conditions.Add(condition);
         }
-        
-        _conditionsExperimentRepository.Create(conditions);
+            
+        _experimentRepository.Create(experiment);
     }
     
     public List<ExperimentCondition> GetAllConditions()
     {
-        return _conditionsExperimentRepository.Read();
+        return _experimentRepository.Read<ExperimentCondition>();
     }
 
     public List<Experiment> GetAllExperiments()
     {
-        return _experimentRepository.Read();
+        return _experimentRepository.Read<Experiment>();
     }
 }
