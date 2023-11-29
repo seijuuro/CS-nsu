@@ -1,4 +1,4 @@
-namespace CollisiumApp.Configs;
+namespace Core.Configs;
 
 public class ExperimentConfig
 {
@@ -6,4 +6,5 @@ public class ExperimentConfig
     public bool RunExperimentsDb { get; set; }
     public int ExperimentsDbCount { get; set; }
     public int ExperimentsToRunCount { get; set; }
+    public int DeckSize { get; set; }
 }

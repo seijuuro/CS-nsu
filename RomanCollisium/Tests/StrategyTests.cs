@@ -1,63 +1,30 @@
-using CollisiumCore.Models.Cards;
-using CollisiumCore.strategyDefinitions;
-using CollisiumStrategies.strategies;
+using Core.Interfaces;
+using Core.Models.Cards;
+using Core.Strategies;
 
 namespace Tests;
 
 public class StrategyTests
 {
-    private Card[] _cards = new Card[18];
+    private const int CardsCount = 18;
+    private Card[] _cards = new Card[CardsCount];
+    private readonly ICardPickStrategy _strategy = new PickFirstRedStrategy();
 
-    [Fact]
-    public void Pick_FirstCardRed_ReturnsZero()
+    [Theory]
+    [InlineData(0, 0)]
+    [InlineData(CardsCount / 2 - 1, CardsCount / 2 - 1)]
+    [InlineData(CardsCount - 1, CardsCount - 1)]
+    [InlineData(-1, 0)]
+    public void Pick_RedCardPosition_ReturnExpectedResult(int redCardPosition, int expectedResult)
     {
         //arrange
-        _cards = GenerateCardsArray(0);
+        _cards = GenerateCardsArray(redCardPosition);
 
         //act
-        var result = StrategyBundle.PickFirstRed(_cards);
+        var result = _strategy.Pick(_cards);
 
         //assert
-        result.Should().Be(0);
-    }
-
-    [Fact]
-    public void Pick_LastCardRed_ReturnsSeventeen()
-    {
-        //arrange
-        _cards = GenerateCardsArray(17);
-
-        //act
-        var result = StrategyBundle.PickFirstRed(_cards);
-
-        //assert
-        result.Should().Be(17);
-    }
-
-    [Fact]
-    public void Pick_MiddleCardRed_ReturnsMiddleIndex()
-    {
-        //arrange
-        _cards = GenerateCardsArray(8);
-
-        //act
-        var result = StrategyBundle.PickFirstRed(_cards);
-
-        //assert
-        result.Should().Be(8);
-    }
-
-    [Fact]
-    public void Pick_NoRedCards_ReturnsZero()
-    {
-        //arrange
-        _cards = GenerateCardsArray(-1);
-
-        //act
-        var result = StrategyBundle.PickFirstRed(_cards);
-
-        //assert
-        result.Should().Be(0);
+        result.Should().Be(expectedResult);
     }
     
     private Card[] GenerateCardsArray(int redCardPosition)

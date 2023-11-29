@@ -3,6 +3,7 @@ using System;
 using CollisiumDataAccess.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CollisiumDataAccess.Migrations
 {
     [DbContext(typeof(ExperimentDbContext))]
-    partial class ExperimentDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231106133340_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.12");
@@ -61,18 +64,11 @@ namespace CollisiumDataAccess.Migrations
 
             modelBuilder.Entity("CollisiumDataAccess.Entities.ExperimentCondition", b =>
                 {
-                    b.HasOne("CollisiumDataAccess.Entities.Experiment", "Experiment")
-                        .WithMany("Conditions")
+                    b.HasOne("CollisiumDataAccess.Entities.Experiment", null)
+                        .WithMany()
                         .HasForeignKey("ExperimentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Experiment");
-                });
-
-            modelBuilder.Entity("CollisiumDataAccess.Entities.Experiment", b =>
-                {
-                    b.Navigation("Conditions");
                 });
 #pragma warning restore 612, 618
         }

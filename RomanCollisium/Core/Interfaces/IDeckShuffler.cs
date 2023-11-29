@@ -1,8 +1,8 @@
-using CollisiumCore.Models;
+using Core.Models;
 
-namespace CollisiumCore.Interfaces;
+namespace Core.Interfaces;
 
 public interface IDeckShuffler
 {
-    public Deck Shuffle(Deck deck);
+    Deck Shuffle(Deck deck);
 }

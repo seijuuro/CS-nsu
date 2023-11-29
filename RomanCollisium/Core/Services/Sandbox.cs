@@ -1,8 +1,8 @@
-using CollisiumApp.Players;
-using CollisiumCore.Interfaces;
-using CollisiumCore.Models;
+using Core.Interfaces;
+using Core.Models;
+using Core.Players;
 
-namespace CollisiumApp.Services;
+namespace Core.Services;
 
 public class Sandbox
 {
@@ -10,7 +10,6 @@ public class Sandbox
     private readonly IDeckShuffler _shuffler;
     private readonly ElonPlayer _elon;
     private readonly MarkPlayer _mark;
-    
     
     public Sandbox(Deck deck, IDeckShuffler deckShuffler, ElonPlayer elon, MarkPlayer mark)
     {
@@ -24,24 +23,33 @@ public class Sandbox
     {
         _deck = _shuffler.Shuffle(_deck);
         
-        return CardsDraft(_deck);
+        return CardsDraft();
     }
-
-    // не уверен, что тут нужна перегрузка
+    
     public bool RunExperiment(string cardsOrder)
     {
-        _deck.CardsFromString(cardsOrder);
+        _deck.SetCards(cardsOrder);
         
-        return CardsDraft(_deck);
+        return CardsDraft();
+    }
+    
+    public string GetElonStrategyName()
+    {
+        return _elon.GetStrategyName();
     }
 
-    private bool CardsDraft(Deck deck)
+    public string GetMarkStrategyName()
     {
-        _elon.ReceiveCards(deck.GetFirstHalf());
-        _mark.ReceiveCards(deck.GetSecondHalf());
+        return _mark.GetStrategyName();
+    }
+
+    private bool CardsDraft()
+    {
+        _elon.ReceiveCards(_deck.GetFirstHalf());
+        _mark.ReceiveCards(_deck.GetSecondHalf());
         
-        int elonNumber = _elon.PickCard();
-        int markNumber = _mark.PickCard();
+        var elonNumber = _elon.PickCard();
+        var markNumber = _mark.PickCard();
 
         return CheckCardsColor(elonNumber, markNumber);
     }
@@ -51,13 +59,5 @@ public class Sandbox
         var cards = _deck.GetCards();
         
         return cards.ElementAt(elonNumber + cards.Count / 2).Color == cards.ElementAt(markNumber).Color;
-    }
-    
-    public void ShowOpponents()
-    {
-        _elon.ShowCards();
-        Console.Write("     VS      ");
-        _mark.ShowCards();
-        Console.WriteLine("");
     }
 }

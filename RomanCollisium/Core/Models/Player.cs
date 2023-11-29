@@ -1,15 +1,15 @@
 using System.Text;
-using CollisiumCore.Interfaces;
-using CollisiumCore.Models.Cards;
+using Core.Interfaces;
+using Core.Models.Cards;
 
-namespace CollisiumApp.Models;
+namespace Core.Models;
 
 public class Player
 {
     private readonly ICardPickStrategy _strategy;
     private List<Card> _cards;
 
-    public Player(ICardPickStrategy strategy)
+    protected Player(ICardPickStrategy strategy)
     {
         _strategy = strategy;
     }
@@ -26,12 +26,17 @@ public class Player
     
     public void ShowCards()
     {
-        StringBuilder str = new StringBuilder();
+        StringBuilder str = new ();
         foreach (var card in _cards)
         {
-            str.Append(card.ToString());
+            str.Append(card);
         }
         
         Console.Write(str);
+    }
+
+    public string GetStrategyName()
+    {
+        return _strategy.GetType().Name;
     }
 }
