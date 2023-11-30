@@ -2,9 +2,14 @@ namespace Core.Configs;
 
 public class ExperimentConfig
 {
-    public bool GenerateExperimentsDb { get; set; }
-    public bool RunExperimentsDb { get; set; }
-    public int ExperimentsDbCount { get; set; }
-    public int ExperimentsToRunCount { get; set; }
+    public bool GenerateDbExperiments { get; set; }
+    public bool RunRandomExperiments { get; set; }
+    public bool RunWebExperiments { get; set; }
+    public bool RunDbExperiments { get; set; }
+    public int DbExperimentsCount { get; set; }
+    public int RandomExperimentsCount { get; set; }
+    public int WebExperimentsCount { get; set; }
     public int DeckSize { get; set; }
+
+    public WebConfig WebConfig { get; set; }
 }

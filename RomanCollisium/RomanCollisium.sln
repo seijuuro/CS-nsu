@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{CEFDBC8A-7FCB-4F03-B2EE-8618C1CC22EB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayerWebLib", "PlayerWebLib\PlayerWebLib.csproj", "{229991A4-4E9C-4DF6-B990-0667E6168962}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,5 +35,9 @@ Global
 		{CEFDBC8A-7FCB-4F03-B2EE-8618C1CC22EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CEFDBC8A-7FCB-4F03-B2EE-8618C1CC22EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CEFDBC8A-7FCB-4F03-B2EE-8618C1CC22EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{229991A4-4E9C-4DF6-B990-0667E6168962}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{229991A4-4E9C-4DF6-B990-0667E6168962}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{229991A4-4E9C-4DF6-B990-0667E6168962}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{229991A4-4E9C-4DF6-B990-0667E6168962}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

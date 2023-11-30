@@ -32,11 +32,12 @@ static class Program
                 
                 services.AddDbContext<ExperimentDbContext>(options =>
                     options.UseSqlite(hostContext.Configuration.GetConnectionString("DefaultConnection")));
+
+                var config = serviceProvider.GetRequiredService<IOptions<ExperimentConfig>>();
                 
                 services.AddHostedService<ExperimentWorker>();
                 services.AddScoped<Sandbox>();
-                services.AddScoped<Deck>(_ => 
-                    new Deck(serviceProvider.GetRequiredService<IOptions<ExperimentConfig>>().Value.DeckSize));
+                services.AddScoped<Deck>(_ => new Deck(config.Value.DeckSize));
                 
                 services.AddScoped<IDeckShuffler, DeckShuffler>();
                 services.AddScoped<IElonStrategy, PickFirstRedStrategy>();
@@ -46,6 +47,8 @@ static class Program
 
                 services.AddScoped<ExperimentData>();
                 services.AddScoped<ExperimentRepository>();
+                
+                services.AddScoped<PlayerResolver>(provider => new PlayerResolver(provider));
             });
     }
 }
