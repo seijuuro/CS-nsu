@@ -1,7 +1,7 @@
 using CollisiumDataAccess.Services;
 using Core.Configs;
-using Core.Players;
 using Core.Services;
+using Core.Utilities;
 using Microsoft.Extensions.Options;
 using PlayerWebLib;
 
@@ -69,8 +69,8 @@ public class ExperimentWorker : IHostedService
             if (_sandbox.RunRandomExperiment())
                 successCount++;
         }
-        Console.WriteLine($"{successCount} / {_config.Value.WebExperimentsCount} = " +
-                          $"{(double)successCount / _config.Value.WebExperimentsCount}");
+        Console.WriteLine($"{successCount} / {_config.Value.RandomExperimentsCount} = " +
+                          $"{(double)successCount / _config.Value.RandomExperimentsCount}");
     }
 
     private async Task RunWebExperiments()
@@ -83,7 +83,7 @@ public class ExperimentWorker : IHostedService
             if (await _sandbox.RunExperimentUsingHttp(_config.Value.WebConfig.ElonUrl, _config.Value.WebConfig.MarkUrl))
                 successCount++;
         }
-        Console.WriteLine($"{successCount} / {_config.Value.WebExperimentsCount} = " +
+        Console.WriteLine($"WEB: {successCount} / {_config.Value.WebExperimentsCount} = " +
                           $"{(double)successCount / _config.Value.WebExperimentsCount}");
     }
 

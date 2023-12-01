@@ -1,7 +1,8 @@
 using Core.Models;
+using Core.Players;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Core.Players;
+namespace Core.Utilities;
 
 public class PlayerResolver
 {
